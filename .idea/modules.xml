@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HelloWorldFunction/HelloWorld.iml" filepath="$PROJECT_DIR$/HelloWorldFunction/HelloWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../aws-lambda-domain-model/aws-lambda-domain-model.iml" filepath="$PROJECT_DIR$/../aws-lambda-domain-model/aws-lambda-domain-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/aws-lambda-domain-model-java.iml" filepath="$PROJECT_DIR$/.idea/aws-lambda-domain-model-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../aws-lambda-domain-model/untitled/untitled.iml" filepath="$PROJECT_DIR$/../aws-lambda-domain-model/untitled/untitled.iml" />
+    </modules>
+  </component>
+</project>
