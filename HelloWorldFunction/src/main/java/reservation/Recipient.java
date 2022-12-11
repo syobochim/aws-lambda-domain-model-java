@@ -9,7 +9,7 @@ public class Recipient {
     final String firstName;
     final String lastName;
     final int age;
-    final List<Slot> slots;
+    private final List<Slot> slots;
 
     public Recipient(String recipientId, String email, String firstName, String lastName, int age) {
         this.recipientId = recipientId;
@@ -20,20 +20,30 @@ public class Recipient {
         this.slots = new ArrayList<>();
     }
 
+    List<Slot> getSlots() {
+        return List.copyOf(slots);
+    }
+
+    /**
+     * Add a slot to the recipient.
+     *
+     * @param slot Reservation Slot to add
+     * @return true : if the slot is added successfully / false : if the slot is added failed
+     */
     boolean addReserveSlot(Slot slot) {  // TODO : 例外じゃなくBooleanを飛ばしているの、ちょっと違和感ある
-        if (isSlotsCountEqualOrOverTwo()) return false;
-        if (areSlotsSameDate(slot)) return false;
+        if (isReservationSlotFull()) return false;
+        if (existReservationSameDatetime(slot)) return false;
 
         slots.add(slot);
-        slot.useSlot();  // TODO : 副作用っぽい感じがするけどいいのかな・・・
+        slot.useSlot();
         return true;
     }
 
-    private boolean areSlotsSameDate(Slot slot) {
+    private boolean existReservationSameDatetime(Slot slot) {
         return slots.stream().map(s -> s.reservationDate).anyMatch(slot.reservationDate::isEqual);
     }
 
-    private boolean isSlotsCountEqualOrOverTwo() {
+    private boolean isReservationSlotFull() {
         return slots.size() >= 2;
     }
 }
