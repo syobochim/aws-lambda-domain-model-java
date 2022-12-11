@@ -6,7 +6,8 @@ public class Slot {
     final String slotId;
     final LocalDateTime reservationDate;
     final String location;
-    boolean isVacant;
+    private boolean isVacant;
+
     public Slot(String slotId, LocalDateTime reservationDate, String location) {
         this.slotId = slotId;
         this.reservationDate = reservationDate;
@@ -16,6 +17,10 @@ public class Slot {
 
     void useSlot() {
         this.isVacant = false;
+    }
+
+    boolean isVacant() {
+        return isVacant;
     }
 
 }
