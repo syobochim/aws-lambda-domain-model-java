@@ -5,6 +5,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +29,15 @@ public class DDBSlotAdapter implements SlotAdapterInterface {
         Map<String, AttributeValue> slot = dynamoDbClient
                 .getItem(b -> b.tableName(tableName).key(key))
                 .item();
-        return new Slot(slotId, LocalDateTime.parse(slot.get(DYNAMODB_DATE_KEY).s()), slot.get(DYNAMODB_LOCATION_KEY).s());
+
+        return new Slot(slotId,
+                formatReservationDateTime(slot),
+                slot.get(DYNAMODB_LOCATION_KEY).s());
+    }
+
+    private LocalDateTime formatReservationDateTime(Map<String, AttributeValue> slot) {
+        return LocalDateTime.parse(slot.get(DYNAMODB_DATE_KEY).s(),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override

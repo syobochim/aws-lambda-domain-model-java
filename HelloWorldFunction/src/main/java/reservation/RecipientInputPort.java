@@ -21,6 +21,7 @@ public class RecipientInputPort implements RecipientInputPortInterface {
 
         System.out.println("recipient: " + recipient.firstName + " slotDate:  " + slot.reservationDate);
 
+        // TODO : InputPortが業務ロジックを持ってる？
         boolean isSuccessAdd = recipient.addReserveSlot(slot);
         if (isSuccessAdd) {
             recipientOutputPort.addReservation(recipient);

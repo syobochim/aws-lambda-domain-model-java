@@ -3,10 +3,8 @@ package reservation;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author mugajin
@@ -49,7 +47,10 @@ public class DDBRecipientAdapter implements RecipientAdapterInterface {
         item.put(DYNAMODB_FIRST_NAME_KEY, AttributeValue.builder().s(recipient.firstName).build());
         item.put(DYNAMODB_LAST_NAME_KEY, AttributeValue.builder().s(recipient.lastName).build());
         item.put(DYNAMODB_AGE_KEY, AttributeValue.builder().n(String.valueOf(recipient.age)).build());
-        item.put(DYNAMODB_SLOTS_KEY, AttributeValue.builder().l(List.of()).build());
+
+        Collection<AttributeValue> slots = recipient.getSlots().stream().map(slot -> AttributeValue.builder().s(slot.slotId).build()).collect(Collectors.toList());
+        item.put(DYNAMODB_SLOTS_KEY, AttributeValue.builder().l(slots).build());
+
         return dynamoDbClient.putItem(b -> b.tableName(tableName).item(item)).sdkHttpResponse().isSuccessful();
     }
 }

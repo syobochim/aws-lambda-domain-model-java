@@ -21,7 +21,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: HelloWorldFunction
-      Handler: helloworld.App::handleRequest
+      Handler: reservation.App::handleRequest
       Runtime: java11
       MemorySize: 512
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
@@ -33,15 +33,15 @@ Resources:
         - DynamoDBWritePolicy:
             TableName:
               Ref: DDBTableName
-        - DynamoDBReadPolicy:
+        - DynamoDBCrudPolicy:
             TableName:
               Ref: DDBTableName
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
-            Method: get
+            Path: /reservation
+            Method: post
 
   VaccinationReservation:
     Type: AWS::Serverless::SimpleTable
@@ -58,10 +58,5 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/reservation/"
+
