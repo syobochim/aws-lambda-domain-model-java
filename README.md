@@ -38,7 +38,7 @@ The Serverless Application Model Command-Line Interface (SAM CLI) extends the AW
 To use the SAM CLI, you need the following tools.
 
 - SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-- [Python 3 installed](https://www.python.org/downloads/)
+- [Java 11 (Amazon Corretto) installed](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/downloads-list.html)
 - Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
 To build and deploy your application for the first time, run the following in your shell:
@@ -92,12 +92,10 @@ $ sam local invoke ReservationFunction --event events/event.json
 
 ## Tests
 
-Tests are defined in the `tests` folder in this project. Use PIP to install the test dependencies and run tests.
+Tests are defined in the `ReservationFunction/src/test` folder in this project. Use Maven to install the test dependencies and run tests.
 
 ```bash
-$ pip install -r tests/requirements.txt --user
-# unit test
-$ python -m pytest tests/unit -v
+$ mvn test
 ```
 
 ## Cleanup
