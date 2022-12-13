@@ -23,4 +23,7 @@ public class Slot {
         return isVacant;
     }
 
+    String toSlotIdJson() {
+            return "{\"slotId\": \"" + slotId + "\"}";
+    }
 }

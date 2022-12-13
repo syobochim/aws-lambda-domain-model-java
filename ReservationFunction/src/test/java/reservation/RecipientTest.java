@@ -71,4 +71,35 @@ public class RecipientTest {
         assertFalse(target.addReserveSlot(slotSameDatetime));
         assertEquals(1, target.getSlots().size());
     }
+
+    @Test
+    public void testRecipientNoSlotToJson() {
+        Recipient target = new Recipient(recipientId, email, firstName, lastName, age);
+        String sut = target.toJson();
+        assertEquals(
+                "{\"recipientId\": \"1\", \"email\": \"mugajin@example.com\", \"firstName\": \"Mizuki\", \"lastName\": \"Ugajin\", \"age\": 30, \"slots\": []}",
+                sut);
+    }
+
+    @Test
+    public void testRecipientOneSlotToJson() {
+        Recipient target = new Recipient(recipientId, email, firstName, lastName, age);
+        target.addReserveSlot(slot);
+        String sut = target.toJson();
+        assertEquals(
+                "{\"recipientId\": \"1\", \"email\": \"mugajin@example.com\", \"firstName\": \"Mizuki\", \"lastName\": \"Ugajin\", \"age\": 30, \"slots\": [{\"slotId\": \"1\"}]}",
+                sut);
+    }
+
+    @Test
+    public void testRecipientTwoSlotToJson() {
+        Recipient target = new Recipient(recipientId, email, firstName, lastName, age);
+        target.addReserveSlot(slot);
+        target.addReserveSlot(slot2);
+        String sut = target.toJson();
+        assertEquals(
+                "{\"recipientId\": \"1\", \"email\": \"mugajin@example.com\", \"firstName\": \"Mizuki\", \"lastName\": \"Ugajin\", \"age\": 30, \"slots\": [{\"slotId\": \"1\"}, {\"slotId\": \"2\"}]}",
+                sut);
+    }
+
 }

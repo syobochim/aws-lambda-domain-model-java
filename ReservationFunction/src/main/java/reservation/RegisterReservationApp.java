@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Handler for requests to Lambda function.
  */
-public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class RegisterReservationApp implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private RecipientInputPort getRecipientInputPort() {
         return new RecipientInputPort(
@@ -20,7 +20,6 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
     }
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
-        input.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode json = objectMapper.readTree(input.getBody());

@@ -17,11 +17,11 @@ Parameters:
     Default: VACCINATION_RESERVATION
 
 Resources:
-  ReservationFunction:
+  RegisterReservationFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: ReservationFunction
-      Handler: reservation.App::handleRequest
+      Handler: reservation.RegisterReservationApp::handleRequest
       Runtime: java11
       MemorySize: 512
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
@@ -42,6 +42,31 @@ Resources:
           Properties:
             Path: /reservation
             Method: post
+  SearchReservationFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ReservationFunction
+      Handler: reservation.SearchReservationApp::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          TABLE_NAME:
+            Ref: DDBTableName
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName:
+              Ref: DDBTableName
+        - DynamoDBCrudPolicy:
+            TableName:
+              Ref: DDBTableName
+      Events:
+        Reservation:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /reservation
+            Method: get
 
   VaccinationReservation:
     Type: AWS::Serverless::SimpleTable

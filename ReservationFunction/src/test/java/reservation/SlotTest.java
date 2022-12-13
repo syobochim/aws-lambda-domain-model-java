@@ -31,4 +31,11 @@ public class SlotTest {
         sut.useSlot();
         assertFalse(sut.isVacant());
     }
+
+    @Test
+    public void testSlotIdToJson() {
+        Slot sut = new Slot(slotId, datetimeSlot, location);
+        String json = sut.toSlotIdJson();
+        assertEquals("{\"slotId\": \"1\"}", json);
+    }
 }

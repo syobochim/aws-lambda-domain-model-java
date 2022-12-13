@@ -12,6 +12,11 @@ public class RecipientInputPort implements RecipientInputPortInterface {
         this.slotOutputPort = slotOutputPort;
     }
 
+    public Status searchRecipient(String recipientId) {
+        Recipient recipient = recipientOutputPort.recipientById(recipientId);
+        return new Status(200, recipient.toJson());
+    }
+
     public Status makeReservation(String recipientId, String slotId) {
         Recipient recipient = recipientOutputPort.recipientById(recipientId);
         Slot slot = slotOutputPort.slotById(slotId);

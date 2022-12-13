@@ -2,6 +2,7 @@ package reservation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Recipient {
     final String recipientId;
@@ -37,6 +38,12 @@ public class Recipient {
         slots.add(slot);
         slot.useSlot();
         return true;
+    }
+
+    String toJson() {
+        String slotList = slots.stream().map(Slot::toSlotIdJson).collect(Collectors.joining(", "));
+        return "{\"recipientId\": \"" + recipientId + "\", \"email\": \"" + email + "\", \"firstName\": \"" + firstName + "\", \"lastName\": \""
+                + lastName + "\", \"age\": " + age + ", \"slots\": [" + slotList + "]}";
     }
 
     private boolean existReservationSameDatetime(Slot slot) {
