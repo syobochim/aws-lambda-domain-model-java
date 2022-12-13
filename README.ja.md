@@ -36,7 +36,7 @@ Serverless Application Model コマンドラインインターフェイス（SAM
 SAM CLI を使用するために以下のツールが必要です。
 
 - SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-- [Python 3 installed](https://www.python.org/downloads/)
+- [Java 11 (Amazon Corretto) installed](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/downloads-list.html)
 - Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
 初めてアプリケーションをビルドしてデプロイするには、シェル上で以下のコマンドを実行します。
@@ -78,7 +78,7 @@ $ curl -X POST -H "Content-Type:application/json" -d "{\"recipient_id\":\"1\", \
 $ sam build --use-container
 ```
 
-SAM CLI は、`src/requirements.txt`で定義された依存関係をインストールして、デプロイパッケージを作成し、`.aws-sam/build` フォルダに保存します。
+SAM CLI は、`pom.xml`で定義された依存関係をインストールして、デプロイパッケージを作成し、`.aws-sam/build` フォルダに保存します。
 
 関数単位のテストは、テスト用のイベント情報を伴って関数をローカル環境で直接実行します。イベントは JSON ドキュメントで関数がイベントソースから受け取る入力値を表します。テストイベントは、このプロジェクトの`events` フォルダに含まれています。
 
@@ -90,12 +90,10 @@ $ sam local invoke ReservationFunction --event events/event.json
 
 ## ユニットテストの実行
 
-テストはこのプロジェクトの`tests` フォルダに定義されてます。PIP コマンドを使ってテストに必要な依存関係をインストールし、テストを実行してください。
+テストはこのプロジェクトの`ReservationFunction/src/test` フォルダに定義されてます。mvn コマンドを使ってテストを実行してください。
 
 ```bash
-$ pip install -r tests/requirements.txt --user
-# unit test
-$ python -m pytest tests/unit -v
+$ mvn test
 ```
 
 ## クリーンアップ
