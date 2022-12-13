@@ -33,7 +33,10 @@ public class DDBSlotAdapter implements SlotAdapterInterface {
 
     @Override
     public boolean save(Slot slot) {
-        // TODO : DDBへのsaveは未実装
-        return false;
+        HashMap<String, AttributeValue> item = new HashMap<>();
+        item.put("pk", AttributeValue.builder().s(PK_PREFIX + slot.slotId).build());
+        item.put(DYNAMODB_DATE_KEY, AttributeValue.builder().s(slot.reservationDate.toString()).build());
+        item.put(DYNAMODB_LOCATION_KEY, AttributeValue.builder().s(slot.location).build());
+        return dynamoDbClient.putItem(b -> b.tableName(tableName).item(item)).sdkHttpResponse().isSuccessful();
     }
 }
